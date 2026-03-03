@@ -56,7 +56,15 @@ server.put("/books/:id", (req: Request, res: Response) => {
     }
   });
 
-  res.send(books); 
+  res.send(books);
+});
+
+server.delete("/books/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const deletebook = books.filter((book) => String(book.id) === String(id));
+
+  res.send(deletebook);
 });
 
 server.listen(port, () => {
