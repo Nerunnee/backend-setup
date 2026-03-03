@@ -35,7 +35,7 @@ server.post("/books", (req: Request, res: Response) => {
 
   books.push(newBook);
 
-  res.send(books);
+  res.status(200).send(books);
 });
 
 server.put("/books/:id", (req: Request, res: Response) => {
@@ -56,15 +56,25 @@ server.put("/books/:id", (req: Request, res: Response) => {
     }
   });
 
-  res.send(books);
+  res.status(200).send(books);
+});
+
+server.delete("/books", (req: Request, res: Response) => {
+  res.status(200).send(books);
 });
 
 server.delete("/books/:id", (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const deletebook = books.filter((book) => String(book.id) === String(id));
+  const deletebook = books.find((book) => String(book.id) === String(id));
 
-  res.send(deletebook);
+  if (!deletebook) {
+    return res.status(403).json({ message: "олдсонгүй" });
+  } else {
+    res.status(200).json({ message: "Амжилттай устгалаа" });
+  }
+
+  res.send(books);
 });
 
 server.listen(port, () => {
