@@ -1,9 +1,12 @@
 import fs from "node:fs/promises";
+import { Book } from "./types.js";
 
-export const getMovies = async () => {
+export const readBooks = async () => {
   try {
     const data = await fs.readFile("./data.json", "utf8");
-    return JSON.parse(data);
+    const books: Book[] = JSON.parse(data);
+
+    return books;
   } catch (error) {
     console.error(error);
     return [];
